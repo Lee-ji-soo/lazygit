@@ -163,7 +163,8 @@ func (gui *Gui) getMainDiffForLbl(state *LblPanelState) (string, error) {
 // I'd prefer not to have knowledge of contexts using this file but I'm not sure
 // how to get around this
 func (gui *Gui) currentLblMainPair() MainContextPair {
-	if gui.currentContext().GetKey() == gui.State.Contexts.PatchBuilding.GetKey() {
+	// because we're not using the lock it's important this is only called
+	if gui.currentStaticContextWithoutLock().GetKey() == gui.State.Contexts.PatchBuilding.GetKey() {
 		return gui.patchBuildingMainContextPair()
 	} else {
 		return gui.stagingMainContextPair()

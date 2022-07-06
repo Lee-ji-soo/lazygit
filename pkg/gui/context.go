@@ -273,6 +273,10 @@ func (gui *Gui) currentStaticContext() types.Context {
 	gui.State.ContextManager.RLock()
 	defer gui.State.ContextManager.RUnlock()
 
+	return gui.currentStaticContextWithoutLock()
+}
+
+func (gui *Gui) currentStaticContextWithoutLock() types.Context {
 	stack := gui.State.ContextManager.ContextStack
 
 	if len(stack) == 0 {

@@ -109,13 +109,13 @@ func (gui *Gui) secondaryView() *gocui.View {
 }
 
 func (gui *Gui) scrollLeftMain() error {
-	gui.scrollLeft(gui.Views.Main)
+	gui.scrollLeft(gui.mainView())
 
 	return nil
 }
 
 func (gui *Gui) scrollRightMain() error {
-	gui.scrollRight(gui.Views.Main)
+	gui.scrollRight(gui.mainView())
 
 	return nil
 }

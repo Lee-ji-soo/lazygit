@@ -79,6 +79,9 @@ func (gui *Gui) contextTree() *context.ContextTree {
 			}),
 			context.ContextCallbackOpts{
 				OnFocus: func(opts types.OnFocusOpts) error {
+					gui.Views.Staging.Wrap = false
+					gui.Views.StagingSecondary.Wrap = false
+
 					forceSecondaryFocused := false
 					selectedLineIdx := -1
 					if opts.ClickedWindowName != "" {
@@ -92,9 +95,11 @@ func (gui *Gui) contextTree() *context.ContextTree {
 					return gui.onStagingFocus(forceSecondaryFocused, selectedLineIdx)
 				},
 				OnFocusLost: func(opts types.OnFocusLostOpts) error {
-					gui.escapeLineByLinePanel()
-					// if opts.NewContextKey != context.STAGING_SECONDARY_CONTEXT_KEY {
-					// }
+					if opts.NewContextKey != context.STAGING_SECONDARY_CONTEXT_KEY {
+						gui.Views.Staging.Wrap = true
+						gui.Views.StagingSecondary.Wrap = true
+						gui.escapeLineByLinePanel()
+					}
 					return nil
 				},
 			},
@@ -108,10 +113,18 @@ func (gui *Gui) contextTree() *context.ContextTree {
 				Focusable:  false,
 			}),
 			context.ContextCallbackOpts{
+				OnFocus: func(opts types.OnFocusOpts) error {
+					gui.Views.Staging.Wrap = false
+					gui.Views.StagingSecondary.Wrap = false
+
+					return nil
+				},
 				OnFocusLost: func(opts types.OnFocusLostOpts) error {
-					gui.escapeLineByLinePanel()
-					// if opts.NewContextKey != context.STAGING_MAIN_CONTEXT_KEY {
-					// }
+					if opts.NewContextKey != context.STAGING_MAIN_CONTEXT_KEY {
+						gui.Views.Staging.Wrap = true
+						gui.Views.StagingSecondary.Wrap = true
+						gui.escapeLineByLinePanel()
+					}
 					return nil
 				},
 			},
@@ -126,6 +139,9 @@ func (gui *Gui) contextTree() *context.ContextTree {
 			}),
 			context.ContextCallbackOpts{
 				OnFocus: func(opts types.OnFocusOpts) error {
+					// no need to change wrap on the secondary view because it can't be interacted with
+					gui.Views.PatchBuilding.Wrap = false
+
 					selectedLineIdx := -1
 					if opts.ClickedWindowName == "main" {
 						selectedLineIdx = opts.ClickedViewLineIdx
@@ -134,6 +150,8 @@ func (gui *Gui) contextTree() *context.ContextTree {
 					return gui.onPatchBuildingFocus(selectedLineIdx)
 				},
 				OnFocusLost: func(opts types.OnFocusLostOpts) error {
+					gui.Views.PatchBuilding.Wrap = true
+
 					gui.escapeLineByLinePanel()
 					return nil
 				},
@@ -159,7 +177,16 @@ func (gui *Gui) contextTree() *context.ContextTree {
 				Focusable:       true,
 			}),
 			context.ContextCallbackOpts{
-				OnFocus: OnFocusWrapper(func() error { return gui.renderConflictsWithLock(true) }),
+				OnFocus: OnFocusWrapper(func() error {
+					gui.Views.Merging.Wrap = false
+
+					return gui.renderConflictsWithLock(true)
+				}),
+				OnFocusLost: func(types.OnFocusLostOpts) error {
+					gui.Views.Merging.Wrap = true
+
+					return nil
+				},
 			},
 		),
 		Confirmation: context.NewSimpleContext(

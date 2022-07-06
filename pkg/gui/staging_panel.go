@@ -91,8 +91,6 @@ func (gui *Gui) handleTogglePanel() error {
 }
 
 func (gui *Gui) handleStagingEscape() error {
-	gui.escapeLineByLinePanel()
-
 	return gui.c.PushContext(gui.State.Contexts.Files)
 }
 

@@ -240,7 +240,7 @@ func (gui *Gui) commitFilesListContext() *context.CommitFilesContext {
 				return []string{line}
 			})
 		},
-		OnFocusWrapper(gui.onCommitFileFocus),
+		nil,
 		gui.withDiffModeCheck(gui.commitFilesRenderToMain),
 		nil,
 		gui.c,

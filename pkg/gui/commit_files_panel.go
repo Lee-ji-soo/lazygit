@@ -4,12 +4,6 @@ import (
 	"github.com/jesseduffield/lazygit/pkg/gui/controllers"
 )
 
-// TODO: do we need this?
-func (gui *Gui) onCommitFileFocus() error {
-	gui.escapeLineByLinePanel()
-	return nil
-}
-
 func (gui *Gui) commitFilesRenderToMain() error {
 	node := gui.State.Contexts.CommitFiles.GetSelected()
 	if node == nil {

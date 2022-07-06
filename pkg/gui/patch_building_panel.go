@@ -103,8 +103,6 @@ func (gui *Gui) handleToggleSelectionForPatch() error {
 }
 
 func (gui *Gui) handleEscapePatchBuildingPanel() error {
-	gui.escapeLineByLinePanel()
-
 	if gui.git.Patch.PatchManager.IsEmpty() {
 		gui.git.Patch.PatchManager.Reset()
 	}

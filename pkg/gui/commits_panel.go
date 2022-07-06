@@ -25,8 +25,6 @@ func (gui *Gui) onCommitFocus() error {
 		})
 	}
 
-	gui.escapeLineByLinePanel()
-
 	return nil
 }
 
