@@ -279,6 +279,7 @@ See the [docs](docs/Custom_Command_Keybindings.md)
 
 ## Contributing
 
+;;
 We love your input! Please check out the [contributing guide](CONTRIBUTING.md).
 For contributor discussion about things not better discussed here in the repo, join the slack channel
 
